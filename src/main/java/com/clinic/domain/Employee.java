@@ -32,9 +32,18 @@ public class Employee {
     @JoinColumn(name = "schedule_id")
     private Schedule schedule;
 
-    @OneToMany(mappedBy = "employee")
+    @OneToMany(
+            mappedBy = "employee",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
     private List<Appointment> appointment;
 
     @ManyToMany
-    private List<Service> service;
+    private List<Treatment> treatment;
+
+    public Employee(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
 }

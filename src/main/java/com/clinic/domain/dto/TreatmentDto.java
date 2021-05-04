@@ -9,7 +9,7 @@ import java.util.List;
 
 @Getter
 @AllArgsConstructor
-public class ServiceDto {
+public class TreatmentDto {
 
     private Long id;
     private String name;

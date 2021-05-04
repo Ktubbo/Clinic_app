@@ -37,4 +37,9 @@ public class Customer {
     @Column(name = "email")
     private String email;
 
+    public Customer(String firstName, String lastName, String pesel) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.pesel = pesel;
+    }
 }

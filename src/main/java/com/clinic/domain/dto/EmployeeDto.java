@@ -2,7 +2,7 @@ package com.clinic.domain.dto;
 
 import com.clinic.domain.Appointment;
 import com.clinic.domain.Schedule;
-import com.clinic.domain.Service;
+import com.clinic.domain.Treatment;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -17,5 +17,5 @@ public class EmployeeDto {
     private String lastName;
     private Schedule schedule;
     private Appointment appointment;
-    private List<Service> service;
+    private List<Treatment> treatment;
 }

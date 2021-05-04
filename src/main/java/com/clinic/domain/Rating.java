@@ -6,14 +6,12 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
-import java.util.List;
 
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Service {
+public class Rating {
 
     @Id
     @NotNull
@@ -21,14 +19,9 @@ public class Service {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "name")
-    @NotNull
-    private String name;
+    @Column(name = "rating")
+    private int rating;
 
-    @Column(name = "price")
-    @NotNull
-    private BigDecimal price;
-
-    @ManyToMany
-    private List<Employee> employee;
+    @OneToOne
+    private Appointment appointment;
 }
