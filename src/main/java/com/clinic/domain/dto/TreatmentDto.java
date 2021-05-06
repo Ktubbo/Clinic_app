@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.math.BigDecimal;
+import java.time.Duration;
 import java.util.List;
 
 @Getter
@@ -14,5 +15,6 @@ public class TreatmentDto {
     private Long id;
     private String name;
     private BigDecimal price;
+    private Duration duration;
     private List<Employee> employee;
 }

@@ -16,6 +16,6 @@ public class EmployeeDto {
     private String firstName;
     private String lastName;
     private Schedule schedule;
-    private Appointment appointment;
+    private List<Appointment> appointment;
     private List<Treatment> treatment;
 }

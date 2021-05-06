@@ -18,5 +18,6 @@ public class AppointmentDto {
     private Treatment treatment;
     private Customer customer;
     private Employee employee;
+    private String pricingStrategy;
     private BigDecimal price;
 }
