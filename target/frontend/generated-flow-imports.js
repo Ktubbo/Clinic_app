@@ -1,6 +1,31 @@
 const div = document.createElement('div');
 div.innerHTML = '<custom-style><style include="lumo-color lumo-typography"></style></custom-style>';
 document.head.insertBefore(div.firstElementChild, document.head.firstChild);
+document.documentElement.setAttribute('theme', 'dark');
+
+function addCssBlock(block) {
+ const tpl = document.createElement('template');
+ tpl.innerHTML = block;
+ document.head.appendChild(tpl.content);
+}
+import $css_0 from 'Frontend/views/main/main-view.css';
+addCssBlock(`<custom-style><style>${$css_0}</style></custom-style>`);
+import $css_1 from 'Frontend/views/customers/customers-view.css';
+addCssBlock(`<custom-style><style>${$css_1}</style></custom-style>`);
+import $css_2 from 'Frontend/views/ratings/ratings-view.css';
+addCssBlock(`<custom-style><style>${$css_2}</style></custom-style>`);
+import $css_3 from 'Frontend/views/treatments/treatments-view.css';
+addCssBlock(`<custom-style><style>${$css_3}</style></custom-style>`);
+import $css_4 from 'Frontend/views/home/home-view.css';
+addCssBlock(`<custom-style><style>${$css_4}</style></custom-style>`);
+import $css_5 from 'Frontend/views/appointments/appointments-view.css';
+addCssBlock(`<custom-style><style>${$css_5}</style></custom-style>`);
+import $css_6 from 'Frontend/views/employees/employees-view.css';
+addCssBlock(`<custom-style><style>${$css_6}</style></custom-style>`);
+import $css_7 from 'Frontend/views/schedules/schedules-view.css';
+addCssBlock(`<custom-style><style>${$css_7}</style></custom-style>`);
+import $css_8 from 'Frontend/views/timetables/time-tables-view.css';
+addCssBlock(`<custom-style><style>${$css_8}</style></custom-style>`);
 
 import '@polymer/iron-icon/iron-icon.js';
 import '@polymer/iron-list/iron-list.js';
@@ -76,3 +101,4 @@ import '@vaadin/flow-frontend/dndConnector.js';
 import '@vaadin/flow-frontend/gridConnector.js';
 import '@vaadin/flow-frontend/ironListConnector.js';
 import '@vaadin/flow-frontend/selectConnector.js';
+import 'Frontend/styles/shared-styles.js';

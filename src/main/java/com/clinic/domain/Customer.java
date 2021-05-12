@@ -3,6 +3,7 @@ package com.clinic.domain;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,10 +12,11 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Customer {
+public class Customer implements Cloneable {
 
     @Id
     @NotNull
@@ -41,5 +43,22 @@ public class Customer {
         this.firstName = firstName;
         this.lastName = lastName;
         this.pesel = pesel;
+    }
+
+    public Customer(String firstName, String lastName, String pesel, String email) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.pesel = pesel;
+        this.email = email;
+    }
+
+    @Override
+    public Customer clone() throws CloneNotSupportedException {
+        return (Customer) super.clone();
+    }
+
+    @Override
+    public String toString() {
+        return id + " " + firstName + " " + lastName + " " + pesel + " " + email;
     }
 }

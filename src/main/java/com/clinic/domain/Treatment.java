@@ -3,6 +3,7 @@ package com.clinic.domain;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -11,10 +12,11 @@ import java.time.Duration;
 import java.util.List;
 
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Treatment {
+public class Treatment implements Cloneable{
 
     @Id
     @NotNull
@@ -40,5 +42,15 @@ public class Treatment {
         this.name = name;
         this.price = price;
         this.duration = duration;
+    }
+
+    @Override
+    public Treatment clone() throws CloneNotSupportedException {
+        return (Treatment) super.clone();
+    }
+
+    @Override
+    public String toString() {
+        return id + " " + name;
     }
 }

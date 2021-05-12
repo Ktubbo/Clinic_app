@@ -1,9 +1,11 @@
 package com.clinic.mapper;
 
 import com.clinic.domain.Treatment;
+import com.clinic.domain.dto.DurationDto;
 import com.clinic.domain.dto.TreatmentDto;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,7 +15,7 @@ public class TreatmentMapper {
         return new Treatment (treatmentDto.getId(),
                 treatmentDto.getName(),
                 treatmentDto.getPrice(),
-                treatmentDto.getDuration(),
+                treatmentDto.getDuration().toDuration(),
                 treatmentDto.getEmployee());
     }
 
@@ -21,7 +23,7 @@ public class TreatmentMapper {
         return new TreatmentDto(treatment.getId(),
                 treatment.getName(),
                 treatment.getPrice(),
-                treatment.getDuration(),
+                new DurationDto(treatment.getDuration()),
                 treatment.getEmployee());
     }
 

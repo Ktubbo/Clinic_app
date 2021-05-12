@@ -3,16 +3,19 @@ package com.clinic.domain;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Employee {
+public class Employee implements Cloneable{
 
     @Id
     @NotNull
@@ -39,11 +42,25 @@ public class Employee {
     )
     private List<Appointment> appointment;
 
-    @ManyToMany
-    private List<Treatment> treatment;
+    @ManyToMany(
+            fetch = FetchType.EAGER,
+            mappedBy = "employee",
+            cascade = CascadeType.ALL
+    )
+    private List<Treatment> treatment = new ArrayList<>();
 
     public Employee(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
+    }
+
+    @Override
+    public Employee clone() throws CloneNotSupportedException {
+        return (Employee) super.clone();
+    }
+
+    @Override
+    public String toString() {
+        return id + " " + firstName + " " + lastName;
     }
 }
