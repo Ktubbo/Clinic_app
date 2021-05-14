@@ -40,14 +40,13 @@ public class Employee implements Cloneable{
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<Appointment> appointment;
+    private List<Appointment> appointment = new ArrayList<>();
 
     @ManyToMany(
             fetch = FetchType.EAGER,
-            mappedBy = "employee",
-            cascade = CascadeType.ALL
+            mappedBy = "employees"
     )
-    private List<Treatment> treatment = new ArrayList<>();
+    private List<Treatment> treatments = new ArrayList<>();
 
     public Employee(String firstName, String lastName) {
         this.firstName = firstName;

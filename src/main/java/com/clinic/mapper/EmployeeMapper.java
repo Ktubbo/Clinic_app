@@ -16,7 +16,7 @@ public class EmployeeMapper {
                 employeeDto.getLastName(),
                 employeeDto.getSchedule(),
                 employeeDto.getAppointment(),
-                employeeDto.getTreatment());
+                employeeDto.getTreatments());
     }
 
     public EmployeeDto mapToEmployeeDto(Employee employee) {
@@ -25,7 +25,7 @@ public class EmployeeMapper {
                 employee.getLastName(),
                 employee.getSchedule(),
                 employee.getAppointment(),
-                employee.getTreatment());
+                employee.getTreatments());
     }
 
     public List<EmployeeDto> mapToEmployeeDtoList(final List<Employee> employeeList) {

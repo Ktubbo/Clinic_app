@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -19,7 +20,7 @@ public class EmployeeDto {
     private String lastName;
     private Schedule schedule;
     private List<Appointment> appointment;
-    private List<Treatment> treatment;
+    private List<Treatment> treatments;
 
     public EmployeeDto(String firstName, String lastName) {
         this.firstName = firstName;

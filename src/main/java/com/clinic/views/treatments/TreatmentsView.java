@@ -1,6 +1,6 @@
 package com.clinic.views.treatments;
 
-import com.clinic.domain.Employee;
+import com.clinic.domain.Treatment;
 import com.clinic.domain.Treatment;
 import com.clinic.domain.dto.DurationDto;
 import com.clinic.domain.dto.TreatmentDto;
@@ -22,6 +22,7 @@ import com.vaadin.flow.component.dependency.CssImport;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
+import java.time.Duration;
 import java.util.ArrayList;
 
 @Route(value = "treatments", layout = MainView.class)
@@ -82,14 +83,10 @@ public class TreatmentsView extends Div {
 
     private void save() {
         TreatmentDto treatmentDto = binder.getBean();
-
-        if(treatmentDto==null) {
-            treatmentDto = new TreatmentDto(name.getValue(),
-                    new BigDecimal(price.getValue()),
-                    new DurationDto(hours.getValue(),minutes.getValue()));
-        }
-
-        treatmentDBService.saveTreatment(treatmentMapper.mapToTreatment(treatmentDto));
+        Treatment treatment = treatmentDto==null ? new Treatment(name.getValue(),new BigDecimal(price.getValue()),
+                Duration.ofHours(Long.parseLong(hours.getValue())).plusMinutes(Long.parseLong(minutes.getValue()))) :
+                treatmentDBService.getTreatment(treatmentDto.getId()).get();
+        treatmentDBService.saveTreatment(treatment);
         updateList();
     }
 

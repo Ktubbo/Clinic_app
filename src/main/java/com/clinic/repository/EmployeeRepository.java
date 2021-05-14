@@ -12,5 +12,4 @@ public interface EmployeeRepository extends CrudRepository<Employee,Long> {
     Optional<Employee> findById(Long id);
     Employee save(Employee employee);
     void deleteById(Long id);
-    
 }

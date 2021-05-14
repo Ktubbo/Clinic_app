@@ -16,7 +16,7 @@ public class TreatmentMapper {
                 treatmentDto.getName(),
                 treatmentDto.getPrice(),
                 treatmentDto.getDuration().toDuration(),
-                treatmentDto.getEmployee());
+                treatmentDto.getEmployees());
     }
 
     public TreatmentDto mapToTreatmentDto(Treatment treatment) {
@@ -24,7 +24,7 @@ public class TreatmentMapper {
                 treatment.getName(),
                 treatment.getPrice(),
                 new DurationDto(treatment.getDuration()),
-                treatment.getEmployee());
+                treatment.getEmployees());
     }
 
     public List<TreatmentDto> mapToTreatmentDtoList(final List<Treatment> treatmentList) {
