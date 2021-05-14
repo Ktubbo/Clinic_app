@@ -8,23 +8,23 @@ function addCssBlock(block) {
  tpl.innerHTML = block;
  document.head.appendChild(tpl.content);
 }
-import $css_0 from 'Frontend/views/schedules/schedules-view.css';
+import $css_0 from 'Frontend/views/timetables/time-tables-view.css';
 addCssBlock(`<custom-style><style>${$css_0}</style></custom-style>`);
-import $css_1 from 'Frontend/views/home/home-view.css';
+import $css_1 from 'Frontend/views/employees/employees-view.css';
 addCssBlock(`<custom-style><style>${$css_1}</style></custom-style>`);
-import $css_2 from 'Frontend/views/ratings/ratings-view.css';
+import $css_2 from 'Frontend/views/appointments/appointments-view.css';
 addCssBlock(`<custom-style><style>${$css_2}</style></custom-style>`);
-import $css_3 from 'Frontend/views/main/main-view.css';
+import $css_3 from 'Frontend/views/customers/customers-view.css';
 addCssBlock(`<custom-style><style>${$css_3}</style></custom-style>`);
-import $css_4 from 'Frontend/views/timetables/time-tables-view.css';
+import $css_4 from 'Frontend/views/main/main-view.css';
 addCssBlock(`<custom-style><style>${$css_4}</style></custom-style>`);
-import $css_5 from 'Frontend/views/appointments/appointments-view.css';
+import $css_5 from 'Frontend/views/home/home-view.css';
 addCssBlock(`<custom-style><style>${$css_5}</style></custom-style>`);
-import $css_6 from 'Frontend/views/treatments/treatments-view.css';
+import $css_6 from 'Frontend/views/schedules/schedules-view.css';
 addCssBlock(`<custom-style><style>${$css_6}</style></custom-style>`);
-import $css_7 from 'Frontend/views/customers/customers-view.css';
+import $css_7 from 'Frontend/views/ratings/ratings-view.css';
 addCssBlock(`<custom-style><style>${$css_7}</style></custom-style>`);
-import $css_8 from 'Frontend/views/employees/employees-view.css';
+import $css_8 from 'Frontend/views/treatments/treatments-view.css';
 addCssBlock(`<custom-style><style>${$css_8}</style></custom-style>`);
 
 import '@polymer/iron-icon/iron-icon.js';

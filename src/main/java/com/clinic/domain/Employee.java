@@ -44,7 +44,8 @@ public class Employee implements Cloneable{
 
     @ManyToMany(
             fetch = FetchType.EAGER,
-            mappedBy = "employees"
+            mappedBy = "employees",
+            cascade = CascadeType.PERSIST
     )
     private List<Treatment> treatments = new ArrayList<>();
 

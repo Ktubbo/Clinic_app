@@ -28,6 +28,7 @@ import com.vaadin.flow.component.dependency.CssImport;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,7 +55,6 @@ public class EmployeesView extends Div {
     private Button delete = new Button("Delete");
     private Button addTreatment = new Button("Add Treatment");
     private Button deleteTreatment = new Button("Delete Treatment");
-    private Button showTreatments = new Button("Show Treatments");
 
     private Binder<EmployeeDto> binder = new Binder<>(EmployeeDto.class);
     private Binder<TreatmentDto> treatmentBinder = new Binder<>(TreatmentDto.class);
@@ -68,13 +68,20 @@ public class EmployeesView extends Div {
 
         addClassName("employees-view");
         updateList();
-
+        firstName.setMaxWidth(200,Unit.PIXELS);
+        lastName.setMaxWidth(200, Unit.PIXELS);
         grid.setColumns("firstName", "lastName");
+        grid.setMinWidth(350,Unit.PIXELS);
+        treatmentGrid.setMinWidth(350,Unit.PIXELS);
         treatmentGrid.setColumns("name","price","duration");
         employeeTreatments.setColumns("name","price","duration");
-        employeeTreatments.setMaxWidth(500F, Unit.PIXELS);
+        employeeTreatments.setMaxWidth(350, Unit.PIXELS);
 
-        grid.asSingleSelect().addValueChangeListener(event -> binder.setBean(grid.asSingleSelect().getValue()));
+        grid.asSingleSelect().addValueChangeListener(event -> {
+            binder.setBean(grid.asSingleSelect().getValue());
+            showTreatmentsList(Optional.ofNullable(grid.asSingleSelect().getValue()).isPresent() ?
+                    grid.asSingleSelect().getValue().getId() : null);
+        });
 
         treatmentGrid.asSingleSelect().addValueChangeListener(event -> treatmentBinder.setBean(treatmentGrid.asSingleSelect().getValue()));
 
@@ -87,21 +94,19 @@ public class EmployeesView extends Div {
         binder.forField(lastName).bind(EmployeeDto::getLastName,EmployeeDto::setLastName);
 
         HorizontalLayout employeeButtons = new HorizontalLayout(save, delete);
-        HorizontalLayout treatmentButtons = new HorizontalLayout(addTreatment,deleteTreatment,showTreatments);
+        HorizontalLayout treatmentButtons = new HorizontalLayout(addTreatment,deleteTreatment);
         VerticalLayout buttons = new VerticalLayout(employeeButtons,treatmentButtons);
-        FormLayout form = new FormLayout(firstName, lastName, buttons);
+        VerticalLayout form = new VerticalLayout(firstName, lastName, buttons);
         HorizontalLayout mainContent = new HorizontalLayout(grid,treatmentGrid,form);
         add(filterText,mainContent,employeeTreatments);
 
         save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         addTreatment.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        showTreatments.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
         save.addClickListener(event -> save());
         delete.addClickListener(event -> delete());
         addTreatment.addClickListener(event -> addTreatment());
         deleteTreatment.addClickListener(event -> deleteTreatment());
-        showTreatments.addClickListener(event -> showTreatmentsList());
     }
 
     public void updateList() {
@@ -134,30 +139,40 @@ public class EmployeesView extends Div {
             notification.open();
         }
         updateList();
+        showTreatmentsList(employeeId);
     }
 
     private void deleteTreatment() {
-        EmployeeDto employeeDto = binder.getBean();
-        TreatmentDto treatmentDto = treatmentBinder.getBean();
+        Long employeeId = binder.getBean().getId();
+        Long treatmentId = treatmentBinder.getBean().getId();
 
         try {
-            employeeDBService.deleteTreatment(employeeMapper.mapToEmployee(employeeDto),
-                    treatmentMapper.mapToTreatment(treatmentDto));
+            employeeDBService.deleteTreatment(employeeId,treatmentId);
         } catch (EmployeeNotFoundException e) {
             Notification notification = new Notification("Employee not Found");
             notification.open();
         }
+        updateList();
+        showTreatmentsList(employeeId);
     }
 
     private void showTreatmentsList() {
-        EmployeeDto employeeDto = binder.getBean();
+        if (Optional.ofNullable(binder.getBean()).isPresent()) {
             employeeTreatments.setItems(treatmentMapper
                     .mapToTreatmentDtoList(employeeDBService
-                            .showTreatments(employeeMapper
-                                    .mapToEmployee(employeeDto))));
-            Notification notification = new Notification("Number of treatments: "
-                    + employeeDBService.showTreatments(employeeMapper.mapToEmployee(employeeDto)).size() + "\n" +
-                    "ID: " + employeeDto.getId());
-            notification.open();
+                            .showTreatments(binder.getBean().getId())));
+        } else {
+            employeeTreatments.setItems(new ArrayList<>());
+        }
+    }
+
+    private void showTreatmentsList(Long employeeId) {
+        if (Optional.ofNullable(binder.getBean()).isPresent()) {
+            employeeTreatments.setItems(treatmentMapper
+                    .mapToTreatmentDtoList(employeeDBService
+                            .showTreatments(employeeId)));
+        } else {
+            employeeTreatments.setItems(new ArrayList<>());
+        }
     }
 }

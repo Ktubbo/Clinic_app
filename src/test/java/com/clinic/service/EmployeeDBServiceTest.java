@@ -102,7 +102,7 @@ class EmployeeDBServiceTest {
             fail();
         }
         //Then
-        List<Treatment> treatmentList = service.showTreatments(employee);
+        List<Treatment> treatmentList = service.showTreatments(employeeId);
         assertEquals(treatmentList.size(),2);
     }
 }

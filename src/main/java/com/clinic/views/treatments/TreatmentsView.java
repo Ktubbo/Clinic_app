@@ -7,6 +7,7 @@ import com.clinic.domain.dto.TreatmentDto;
 import com.clinic.mapper.TreatmentMapper;
 import com.clinic.service.TreatmentDBService;
 import com.clinic.views.main.MainView;
+import com.vaadin.flow.component.Unit;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.formlayout.FormLayout;
@@ -53,6 +54,7 @@ public class TreatmentsView extends Div {
         updateList();
 
         grid.setColumns("name","price","duration");
+        grid.setMinWidth(350, Unit.PIXELS);
         grid.asSingleSelect().addValueChangeListener(event ->
                 binder.setBean(grid.asSingleSelect().getValue()));
 

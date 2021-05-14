@@ -4,6 +4,7 @@ import com.clinic.domain.Treatment;
 import com.clinic.domain.dto.DurationDto;
 import com.clinic.domain.dto.TreatmentDto;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
 import java.util.List;

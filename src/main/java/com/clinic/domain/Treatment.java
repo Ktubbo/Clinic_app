@@ -23,7 +23,7 @@ public class Treatment implements Cloneable{
     @Id
     @NotNull
     @GeneratedValue
-    @Column(name = "id")
+    @Column(name = "treatment_id")
     private Long id;
 
     @Column(name = "name")
@@ -37,9 +37,8 @@ public class Treatment implements Cloneable{
     @Column(name = "duration")
     private Duration duration;
 
-    @ManyToMany(
-            fetch = FetchType.EAGER
-    )
+    @ManyToMany(fetch = FetchType.EAGER,
+    cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "Employee_Treatment",
             joinColumns = { @JoinColumn(name = "treatment_id")},

@@ -8,8 +8,9 @@ import com.clinic.repository.TreatmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -52,48 +53,31 @@ public class EmployeeDBService {
         return arrayList;
     }
 
-    public Employee addTreatment(Long employeeId, Long treatmentId) throws EmployeeNotFoundException {
+    public void addTreatment(Long employeeId, Long treatmentId) throws EmployeeNotFoundException {
         Optional<Employee> employeeOptional = repository.findById(employeeId);
         Optional<Treatment> treatmentOptional = treatmentRepository.findById(treatmentId);
         if(employeeOptional.isPresent() && treatmentOptional.isPresent()) {
-/*
-
-            System.out.println("Employee{" +
-                    "id=" + employeeOptional.get().getId() +
-                    ", firstName='" + employeeOptional.get().getFirstName() + '\'' +
-                    ", lastName='" + employeeOptional.get().getLastName() + '\'' +
-                    ", schedule=" + employeeOptional.get().getSchedule() +
-                    ", appointment=" + employeeOptional.get().getAppointment() +
-                    ", treatments=" + employeeOptional.get().getTreatments() +
-                    "}\n" +
-                    "Treatment{" +
-                    "id=" + treatmentOptional.get().getId() +
-                    ", name='" + treatmentOptional.get().getName() + '\'' +
-                    ", price=" + treatmentOptional.get().getPrice() +
-                    ", duration=" + treatmentOptional.get().getDuration() +
-                    ", employees=" + treatmentOptional.get().getEmployees() +
-                    '}');
-*/
-
-            //System.out.println(employeeOptional.get().getTreatments());
-            employeeOptional.get().getTreatments().add(treatmentOptional.get());
-            //System.out.println(employeeOptional.get().getTreatments());
             Employee employee = employeeOptional.get();
+            Treatment treatment = treatmentOptional.get();
+            treatment.getEmployees().add(employee);
+            employee.getTreatments().add(treatment);
             repository.save(employee);
-            System.out.println("Size after saving: " + repository.findById(employeeId).get().getTreatments().size());
         }
-        Employee returnEmployee = repository.findById(employeeId).get();
-        System.out.println(returnEmployee.getTreatments());
-        return returnEmployee;
     }
 
-    public void deleteTreatment(Employee employee, Treatment treatment) throws EmployeeNotFoundException {
-        Optional<Employee> employeeOptional = repository.findById(employee.getId());
-        employeeOptional.ifPresent(e -> {e.getTreatments().remove(treatment);});
-        repository.save(employeeOptional.orElseThrow(EmployeeNotFoundException::new));
+    public void deleteTreatment(Long employeeId, Long treatmentId) throws EmployeeNotFoundException {
+        Optional<Employee> employeeOptional = repository.findById(employeeId);
+        Optional<Treatment> treatmentOptional = treatmentRepository.findById(treatmentId);
+        if(employeeOptional.isPresent() && treatmentOptional.isPresent()) {
+            Employee employee = employeeOptional.get();
+            Treatment treatment = treatmentOptional.get();
+            treatment.getEmployees().remove(employee);
+            employee.getTreatments().remove(treatment);
+            repository.save(employee);
+        }
     }
 
-    public List<Treatment> showTreatments(Employee employee) {
-        return repository.findById(employee.getId()).get().getTreatments();
+    public List<Treatment> showTreatments(Long employeeID) {
+        return repository.findById(employeeID).get().getTreatments();
     }
 }
