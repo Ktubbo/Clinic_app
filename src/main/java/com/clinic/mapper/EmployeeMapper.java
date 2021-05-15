@@ -3,7 +3,6 @@ package com.clinic.mapper;
 import com.clinic.domain.Employee;
 import com.clinic.domain.dto.EmployeeDto;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,7 +14,7 @@ public class EmployeeMapper {
         return new Employee (employeeDto.getId(),
                 employeeDto.getFirstName(),
                 employeeDto.getLastName(),
-                employeeDto.getSchedule(),
+                employeeDto.getShift(),
                 employeeDto.getAppointment(),
                 employeeDto.getTreatments());
     }
@@ -24,7 +23,7 @@ public class EmployeeMapper {
         return new EmployeeDto(employee.getId(),
                 employee.getFirstName(),
                 employee.getLastName(),
-                employee.getSchedule(),
+                employee.getShift(),
                 employee.getAppointment(),
                 employee.getTreatments());
     }

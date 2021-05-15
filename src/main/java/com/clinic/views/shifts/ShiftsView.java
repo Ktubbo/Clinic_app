@@ -1,4 +1,4 @@
-package com.clinic.views.timetables;
+package com.clinic.views.shifts;
 
 import com.clinic.views.main.MainView;
 import com.vaadin.flow.component.Text;
@@ -7,13 +7,13 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.component.dependency.CssImport;
 
-@Route(value = "timetables", layout = MainView.class)
-@PageTitle("TimeTables")
-@CssImport("./views/timetables/time-tables-view.css")
-public class TimeTablesView extends Div {
+@Route(value = "schedules", layout = MainView.class)
+@PageTitle("Schedules")
+@CssImport("./views/schedules/schedules-view.css")
+public class ShiftsView extends Div {
 
-    public TimeTablesView() {
-        addClassName("time-tables-view");
+    public ShiftsView() {
+        addClassName("schedules-view");
         add(new Text("Content placeholder"));
     }
 

@@ -33,7 +33,7 @@ public class Employee implements Cloneable{
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "schedule_id")
-    private Schedule schedule;
+    private Shift shift;
 
     @OneToMany(
             mappedBy = "employee",

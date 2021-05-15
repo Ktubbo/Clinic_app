@@ -11,8 +11,8 @@ import java.time.LocalDateTime;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "Time_Table")
-public class TimeTable {
+@Entity
+public class Shift {
 
     @Id
     @NotNull
@@ -29,9 +29,5 @@ public class TimeTable {
     @OneToOne
     @JoinColumn(name = "employee_id")
     private Employee employee;
-
-    @OneToOne
-    @JoinColumn(name = "appointment_id")
-    private Appointment appointment;
 
 }

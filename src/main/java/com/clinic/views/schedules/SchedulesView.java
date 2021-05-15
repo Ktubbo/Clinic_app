@@ -7,13 +7,13 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.component.dependency.CssImport;
 
-@Route(value = "schedules", layout = MainView.class)
-@PageTitle("Schedules")
-@CssImport("./views/schedules/schedules-view.css")
+@Route(value = "timetables", layout = MainView.class)
+@PageTitle("TimeTables")
+@CssImport("./views/timetables/time-tables-view.css")
 public class SchedulesView extends Div {
 
     public SchedulesView() {
-        addClassName("schedules-view");
+        addClassName("time-tables-view");
         add(new Text("Content placeholder"));
     }
 

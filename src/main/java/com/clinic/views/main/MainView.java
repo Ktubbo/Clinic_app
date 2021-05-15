@@ -7,8 +7,8 @@ import com.clinic.views.customers.CustomersView;
 import com.clinic.views.employees.EmployeesView;
 import com.clinic.views.home.HomeView;
 import com.clinic.views.ratings.RatingsView;
+import com.clinic.views.shifts.ShiftsView;
 import com.clinic.views.schedules.SchedulesView;
-import com.clinic.views.timetables.TimeTablesView;
 import com.clinic.views.treatments.TreatmentsView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentUtil;
@@ -26,12 +26,10 @@ import com.vaadin.flow.component.tabs.TabsVariant;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.PWA;
 import com.vaadin.flow.theme.Theme;
-import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.theme.lumo.Lumo;
-import com.vaadin.flow.component.dependency.CssImport;
 
 @PWA(name = "ClinicApp", shortName = "ClinicApp", enableInstallPrompt = false)
 @JsModule("./styles/shared-styles.js")
@@ -91,8 +89,8 @@ public class MainView extends AppLayout {
     private Component[] createMenuItems() {
         return new Tab[]{createTab("Home", HomeView.class), createTab("Customers", CustomersView.class),
                 createTab("Employees", EmployeesView.class), createTab("Appointments", AppointmentsView.class),
-                createTab("Treatments", TreatmentsView.class), createTab("Schedules", SchedulesView.class),
-                createTab("TimeTables", TimeTablesView.class), createTab("Ratings", RatingsView.class)};
+                createTab("Treatments", TreatmentsView.class), createTab("Shifts", ShiftsView.class),
+                createTab("Schedules", SchedulesView.class), createTab("Ratings", RatingsView.class)};
     }
 
     private static Tab createTab(String text, Class<? extends Component> navigationTarget) {

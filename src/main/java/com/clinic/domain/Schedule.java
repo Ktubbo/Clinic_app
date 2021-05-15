@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
+@Entity(name = "Time_Table")
 public class Schedule {
 
     @Id
@@ -29,5 +29,9 @@ public class Schedule {
     @OneToOne
     @JoinColumn(name = "employee_id")
     private Employee employee;
+
+    @OneToOne
+    @JoinColumn(name = "appointment_id")
+    private Appointment appointment;
 
 }

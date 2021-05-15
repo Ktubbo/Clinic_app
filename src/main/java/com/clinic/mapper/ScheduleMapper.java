@@ -1,5 +1,6 @@
 package com.clinic.mapper;
 
+
 import com.clinic.domain.Schedule;
 import com.clinic.domain.dto.ScheduleDto;
 import org.springframework.stereotype.Service;
@@ -9,19 +10,20 @@ import java.util.stream.Collectors;
 
 @Service
 public class ScheduleMapper {
-
     public Schedule mapToSchedule(ScheduleDto scheduleDto) {
-        return new Schedule (scheduleDto.getId(),
+        return new Schedule(scheduleDto.getId(),
                 scheduleDto.getStart(),
                 scheduleDto.getEnd(),
-                scheduleDto.getEmployee());
+                scheduleDto.getEmployee(),
+                scheduleDto.getAppointment());
     }
 
     public ScheduleDto mapToScheduleDto(Schedule schedule) {
         return new ScheduleDto(schedule.getId(),
                 schedule.getStart(),
                 schedule.getEnd(),
-                schedule.getEmployee());
+                schedule.getEmployee(),
+                schedule.getAppointment());
     }
 
     public List<ScheduleDto> mapToScheduleDtoList(final List<Schedule> scheduleList) {
@@ -31,4 +33,5 @@ public class ScheduleMapper {
     public List<Schedule> mapToScheduleList(final List<ScheduleDto> scheduleDtoList) {
         return scheduleDtoList.stream().map(this::mapToSchedule).collect(Collectors.toList());
     }
+    
 }
