@@ -36,6 +36,12 @@ public class AppointmentController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/appointments", consumes = MediaType.APPLICATION_JSON_VALUE)
     public AppointmentDto createAppointment(@RequestBody AppointmentDto appointmentDto) {
-        return mapper.mapToAppointmentDto(dbService.saveAppointment(mapper.mapToAppointment(appointmentDto)));
+        AppointmentDto returnAppointment = new AppointmentDto();
+        try {
+            returnAppointment = mapper.mapToAppointmentDto(dbService.saveAppointment(mapper.mapToAppointment(appointmentDto)));
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return returnAppointment;
     }
 }

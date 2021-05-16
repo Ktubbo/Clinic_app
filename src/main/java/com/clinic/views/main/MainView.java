@@ -2,7 +2,8 @@ package com.clinic.views.main;
 
 import java.util.Optional;
 
-import com.clinic.views.appointments.AppointmentsView;
+import com.clinic.views.appointments.AppointmentView;
+import com.clinic.views.appointments.SetAppointment;
 import com.clinic.views.customers.CustomersView;
 import com.clinic.views.employees.EmployeesView;
 import com.clinic.views.home.HomeView;
@@ -88,9 +89,10 @@ public class MainView extends AppLayout {
 
     private Component[] createMenuItems() {
         return new Tab[]{createTab("Home", HomeView.class), createTab("Customers", CustomersView.class),
-                createTab("Employees", EmployeesView.class), createTab("Appointments", AppointmentsView.class),
-                createTab("Treatments", TreatmentsView.class), createTab("Shifts", ShiftsView.class),
-                createTab("Schedules", SchedulesView.class), createTab("Ratings", RatingsView.class)};
+                createTab("Employees", EmployeesView.class), createTab("Set Appointment", SetAppointment.class),
+                createTab("Appointments", AppointmentView.class), createTab("Treatments", TreatmentsView.class),
+                createTab("Shifts", ShiftsView.class), createTab("Schedules", SchedulesView.class),
+                createTab("Ratings", RatingsView.class)};
     }
 
     private static Tab createTab(String text, Class<? extends Component> navigationTarget) {

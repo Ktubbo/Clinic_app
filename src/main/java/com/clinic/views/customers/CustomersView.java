@@ -1,12 +1,12 @@
 package com.clinic.views.customers;
 
-import com.clinic.domain.Customer;
 import com.clinic.domain.dto.CustomerDto;
 import com.clinic.mapper.CustomerMapper;
 import com.clinic.service.CustomerDBService;
 import com.clinic.views.main.MainView;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
@@ -14,9 +14,8 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.value.ValueChangeMode;
-import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.PageTitle;
-import com.vaadin.flow.component.dependency.CssImport;
+import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Route(value = "customers", layout = MainView.class)

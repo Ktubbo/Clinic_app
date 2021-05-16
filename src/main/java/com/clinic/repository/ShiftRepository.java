@@ -1,5 +1,6 @@
 package com.clinic.repository;
 
+import com.clinic.domain.Employee;
 import com.clinic.domain.Shift;
 import org.springframework.data.repository.CrudRepository;
 
@@ -12,5 +13,5 @@ public interface ShiftRepository extends CrudRepository<Shift,Long> {
     Optional<Shift> findById(Long id);
     Shift save(Shift appointment);
     void deleteById(Long id);
-
+    List<Shift> findAllByEmployee(Employee employee);
 }

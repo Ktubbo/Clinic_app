@@ -50,7 +50,7 @@ public class EmployeeDBService {
                 //Logger.getLogger(EmployeeDBService.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        Collections.sort(arrayList, (o1, o2) -> (int) (o2.getId() - o1.getId()));
+        arrayList.sort((o1, o2) -> (int) (o2.getId() - o1.getId()));
         return arrayList;
     }
 
