@@ -85,9 +85,11 @@ public class TreatmentsView extends Div {
 
     private void save() {
         TreatmentDto treatmentDto = binder.getBean();
+
         Treatment treatment = treatmentDto==null ? new Treatment(name.getValue(),new BigDecimal(price.getValue()),
                 Duration.ofHours(Long.parseLong(hours.getValue())).plusMinutes(Long.parseLong(minutes.getValue()))) :
                 treatmentDBService.getTreatment(treatmentDto.getId()).get();
+
         treatmentDBService.saveTreatment(treatment);
         updateList();
     }

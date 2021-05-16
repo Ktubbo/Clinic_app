@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Service
 @RequiredArgsConstructor
@@ -39,10 +41,10 @@ public class TreatmentDBService {
                     arrayList.add(treatment.clone());
                 }
             } catch (CloneNotSupportedException ex) {
-                //Logger.getLogger(TreatmentDBService.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(TreatmentDBService.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        Collections.sort(arrayList, (o1, o2) -> (int) (o2.getId() - o1.getId()));
+        arrayList.sort((o1, o2) -> (int) (o2.getId() - o1.getId()));
         return arrayList;
     }
 }

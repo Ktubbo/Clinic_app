@@ -1,6 +1,7 @@
 package com.clinic.service;
 
 import com.clinic.domain.Employee;
+import com.clinic.domain.Shift;
 import com.clinic.domain.Treatment;
 import com.clinic.exceptions.EmployeeNotFoundException;
 import com.clinic.repository.EmployeeRepository;

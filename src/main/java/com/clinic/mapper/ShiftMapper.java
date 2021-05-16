@@ -4,6 +4,10 @@ import com.clinic.domain.Shift;
 import com.clinic.domain.dto.ShiftDto;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,15 +16,17 @@ public class ShiftMapper {
 
     public Shift mapToShift(ShiftDto shiftDto) {
         return new Shift(shiftDto.getId(),
-                shiftDto.getStart(),
-                shiftDto.getEnd(),
+                LocalDateTime.of(LocalDate.parse(shiftDto.getDate()), LocalTime.parse(shiftDto.getStartHour())),
+                LocalDateTime.of(LocalDate.parse(shiftDto.getDate()), LocalTime.parse(shiftDto.getStartHour())),
                 shiftDto.getEmployee());
     }
 
     public ShiftDto mapToShiftDto(Shift shift) {
         return new ShiftDto(shift.getId(),
-                shift.getStart(),
-                shift.getEnd(),
+                shift.getStart().format(DateTimeFormatter.ofPattern("dd MM yyyy")),
+                shift.getStart().getDayOfWeek().toString(),
+                shift.getStart().format(DateTimeFormatter.ofPattern("HH:mm")),
+                shift.getEnd().format(DateTimeFormatter.ofPattern("HH:mm")),
                 shift.getEmployee());
     }
 

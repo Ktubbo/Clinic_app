@@ -31,9 +31,9 @@ public class Employee implements Cloneable{
     @NotNull
     private String lastName;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "schedule_id")
-    private Shift shift;
+    private List<Shift> shift = new ArrayList<>();
 
     @OneToMany(
             mappedBy = "employee",
@@ -61,6 +61,6 @@ public class Employee implements Cloneable{
 
     @Override
     public String toString() {
-        return id + " " + firstName + " " + lastName;
+        return firstName + " " + lastName;
     }
 }

@@ -17,7 +17,7 @@ public class EmployeeDto {
     private Long id;
     private String firstName;
     private String lastName;
-    private Shift shift;
+    private List<Shift> shift;
     private List<Appointment> appointment;
     private List<Treatment> treatments;
 
