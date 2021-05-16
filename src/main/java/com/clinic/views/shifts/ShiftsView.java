@@ -16,5 +16,4 @@ public class ShiftsView extends Div {
         addClassName("schedules-view");
         add(new Text("Content placeholder"));
     }
-
 }
