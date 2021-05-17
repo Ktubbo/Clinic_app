@@ -1,5 +1,7 @@
 package com.clinic.controller;
 
+import com.clinic.domain.Employee;
+import com.clinic.domain.dto.EmployeeDto;
 import com.clinic.domain.dto.EmployeeDto;
 import com.clinic.exceptions.EmployeeNotFoundException;
 import com.clinic.mapper.EmployeeMapper;
@@ -37,5 +39,11 @@ public class EmployeeController {
     @RequestMapping(method = RequestMethod.POST, value = "/employees", consumes = MediaType.APPLICATION_JSON_VALUE)
     public EmployeeDto createEmployee(@RequestBody EmployeeDto employeeDto) {
         return mapper.mapToEmployeeDto(dbService.saveEmployee(mapper.mapToEmployee(employeeDto)));
+    }
+    @RequestMapping(method = RequestMethod.PUT, value = "/employees", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public EmployeeDto updateEmployee(@RequestBody EmployeeDto employeeDto) {
+        Employee employee = mapper.mapToEmployee(employeeDto);
+        Employee savedEmployee = dbService.saveEmployee(employee);
+        return mapper.mapToEmployeeDto(savedEmployee);
     }
 }

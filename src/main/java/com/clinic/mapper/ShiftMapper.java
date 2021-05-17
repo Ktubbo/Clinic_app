@@ -16,8 +16,14 @@ public class ShiftMapper {
 
     public Shift mapToShift(ShiftDto shiftDto) {
         return new Shift(shiftDto.getId(),
-                LocalDateTime.of(LocalDate.parse(shiftDto.getDate()), LocalTime.parse(shiftDto.getStartHour())),
-                LocalDateTime.of(LocalDate.parse(shiftDto.getDate()), LocalTime.parse(shiftDto.getStartHour())),
+                LocalDateTime.of(LocalDate.parse(shiftDto.getDate(),
+                        DateTimeFormatter.ofPattern("dd MM yyyy")),
+                        LocalTime.parse(shiftDto.getStartHour(),
+                                DateTimeFormatter.ofPattern("HH:mm"))),
+                LocalDateTime.of(LocalDate.parse(shiftDto.getDate(),
+                        DateTimeFormatter.ofPattern("dd MM yyyy")),
+                        LocalTime.parse(shiftDto.getEndHour(),
+                                DateTimeFormatter.ofPattern("HH:mm"))),
                 shiftDto.getEmployee());
     }
 

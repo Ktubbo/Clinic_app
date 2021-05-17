@@ -15,7 +15,7 @@ public class EmployeeMapper {
                 employeeDto.getFirstName(),
                 employeeDto.getLastName(),
                 employeeDto.getShift(),
-                employeeDto.getAppointment(),
+                employeeDto.getAppointments(),
                 employeeDto.getTreatments());
     }
 
@@ -24,7 +24,7 @@ public class EmployeeMapper {
                 employee.getFirstName(),
                 employee.getLastName(),
                 employee.getShift(),
-                employee.getAppointment(),
+                employee.getAppointments(),
                 employee.getTreatments());
     }
 

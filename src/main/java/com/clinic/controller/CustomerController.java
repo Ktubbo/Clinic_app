@@ -1,5 +1,6 @@
 package com.clinic.controller;
 
+import com.clinic.domain.Customer;
 import com.clinic.domain.dto.CustomerDto;
 import com.clinic.exceptions.CustomerNotFoundException;
 import com.clinic.mapper.CustomerMapper;
@@ -37,5 +38,12 @@ public class CustomerController {
     @RequestMapping(method = RequestMethod.POST, value = "/customers", consumes = MediaType.APPLICATION_JSON_VALUE)
     public CustomerDto createCustomer(@RequestBody CustomerDto customerDto) {
         return mapper.mapToCustomerDto(dbService.saveCustomer(mapper.mapToCustomer(customerDto)));
+    }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/customers", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public CustomerDto updateCustomer(@RequestBody CustomerDto customerDto) {
+        Customer customer = mapper.mapToCustomer(customerDto);
+        Customer savedCustomer = dbService.saveCustomer(customer);
+        return mapper.mapToCustomerDto(savedCustomer);
     }
 }

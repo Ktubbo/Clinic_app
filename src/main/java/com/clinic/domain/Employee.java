@@ -32,7 +32,7 @@ public class Employee implements Cloneable{
     private String lastName;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "schedule_id")
+    @JoinColumn(name = "shift_id")
     private List<Shift> shift = new ArrayList<>();
 
     @OneToMany(
@@ -40,7 +40,7 @@ public class Employee implements Cloneable{
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<Appointment> appointment = new ArrayList<>();
+    private List<Appointment> appointments = new ArrayList<>();
 
     @ManyToMany(
             fetch = FetchType.EAGER,

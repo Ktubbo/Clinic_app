@@ -23,20 +23,15 @@ class AppointmentEntityTest {
     @Autowired
     AppointmentRepository repository;
 
-    private Customer customer;
-    private Employee employee;
-    private Treatment treatment;
-    private PricingStrategy groupon;
-    private LocalDateTime start;
     private Appointment appointment;
     private long id;
 
     public void prepare() {
-        this.customer = new Customer("John","Smith","72120112124");
-        this.employee = new Employee("David","Brown");
-        this.treatment = new Treatment("Botox", BigDecimal.valueOf(300), Duration.of(1, ChronoUnit.HOURS));
-        this.groupon = PricingStrategy.GROUPON;
-        this.start = LocalDateTime.of(2021,2,20,15,30);
+        Customer customer = new Customer("John", "Smith", "72120112124");
+        Employee employee = new Employee("David", "Brown");
+        Treatment treatment = new Treatment("Botox", BigDecimal.valueOf(300), Duration.of(1, ChronoUnit.HOURS));
+        PricingStrategy groupon = PricingStrategy.GROUPON;
+        LocalDateTime start = LocalDateTime.of(2021, 2, 20, 15, 30);
 
         this.appointment = new Appointment.AppointmentBuilder()
                 .customer(customer)

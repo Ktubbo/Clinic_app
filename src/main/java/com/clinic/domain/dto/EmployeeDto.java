@@ -18,11 +18,6 @@ public class EmployeeDto {
     private String firstName;
     private String lastName;
     private List<Shift> shift;
-    private List<Appointment> appointment;
+    private List<Appointment> appointments;
     private List<Treatment> treatments;
-
-    public EmployeeDto(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
 }

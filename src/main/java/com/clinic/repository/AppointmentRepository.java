@@ -12,5 +12,4 @@ public interface AppointmentRepository extends CrudRepository<Appointment,Long> 
     Optional<Appointment> findById(Long id);
     Appointment save(Appointment appointment);
     void deleteById(Long id);
-
 }
