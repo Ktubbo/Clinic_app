@@ -1,5 +1,7 @@
 package com.clinic.controller;
 
+import com.clinic.domain.Shift;
+import com.clinic.domain.dto.ShiftDto;
 import com.clinic.domain.dto.ShiftDto;
 import com.clinic.exceptions.ShiftNotFoundException;
 import com.clinic.mapper.ShiftMapper;
@@ -37,5 +39,12 @@ public class ShiftController {
     @RequestMapping(method = RequestMethod.POST, value = "/shifts", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ShiftDto createShift(@RequestBody ShiftDto shiftDto) {
         return mapper.mapToShiftDto(dbService.saveShift(mapper.mapToShift(shiftDto)));
+    }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/shifts", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ShiftDto updateShift(@RequestBody ShiftDto shiftDto) {
+        Shift shift = mapper.mapToShift(shiftDto);
+        Shift savedShift = dbService.saveShift(shift);
+        return mapper.mapToShiftDto(savedShift);
     }
 }

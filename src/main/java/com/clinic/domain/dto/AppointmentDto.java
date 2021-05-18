@@ -3,6 +3,8 @@ package com.clinic.domain.dto;
 import com.clinic.domain.Customer;
 import com.clinic.domain.Employee;
 import com.clinic.domain.Treatment;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +18,7 @@ import java.time.LocalDateTime;
 public class AppointmentDto {
 
     private Long id;
-    private LocalDateTime start;
+    private String start;
     private Treatment treatment;
     private Customer customer;
     private Employee employee;

@@ -5,6 +5,10 @@ import com.clinic.domain.PricingStrategy;
 import com.clinic.domain.dto.AppointmentDto;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,7 +18,7 @@ public class AppointmentMapper {
     public Appointment mapToAppointment(AppointmentDto appointmentDto) {
         return new Appointment.AppointmentBuilder()
                 .id(appointmentDto.getId())
-                .start(appointmentDto.getStart())
+                .start(LocalDateTime.parse(appointmentDto.getStart(),DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")))
                 .pricingStrategy(PricingStrategy.valueOf(appointmentDto.getPricingStrategy()))
                 .treatment(appointmentDto.getTreatment())
                 .employee(appointmentDto.getEmployee())
@@ -24,7 +28,7 @@ public class AppointmentMapper {
 
     public AppointmentDto mapToAppointmentDto(Appointment appointment) {
         return new AppointmentDto(appointment.getId(),
-                appointment.getStart(),
+                appointment.getStart().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")),
                 appointment.getTreatment(),
                 appointment.getCustomer(),
                 appointment.getEmployee(),

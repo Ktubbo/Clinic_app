@@ -1,5 +1,6 @@
 package com.clinic.repository;
 
+import com.clinic.domain.Appointment;
 import com.clinic.domain.Employee;
 import com.clinic.domain.Schedule;
 import org.springframework.data.repository.CrudRepository;
@@ -14,4 +15,5 @@ public interface ScheduleRepository extends CrudRepository<Schedule,Long> {
     Schedule save(Schedule schedule);
     void deleteById(Long id);
     List<Schedule> findAllByEmployee(Employee employee);
+    void deleteByAppointment(Appointment appointment);
 }

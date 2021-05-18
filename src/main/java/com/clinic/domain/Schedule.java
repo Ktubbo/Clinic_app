@@ -1,5 +1,7 @@
 package com.clinic.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +13,7 @@ import java.time.LocalDateTime;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "Time_Table")
+@Entity(name = "Schedule")
 public class Schedule {
 
     @Id
@@ -21,9 +23,11 @@ public class Schedule {
     private Long id;
 
     @Column(name = "start")
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDateTime start;
 
     @Column(name = "end")
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDateTime end;
 
     @OneToOne
@@ -34,4 +38,10 @@ public class Schedule {
     @JoinColumn(name = "appointment_id")
     private Appointment appointment;
 
+    public Schedule(LocalDateTime start, LocalDateTime end, Employee employee, Appointment appointment) {
+        this.start = start;
+        this.end = end;
+        this.employee = employee;
+        this.appointment = appointment;
+    }
 }

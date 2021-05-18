@@ -17,7 +17,7 @@ public class ScheduleDBService {
     private final ScheduleRepository repository;
 
     public List<Schedule> getAllSchedules() { return repository.findAll(); }
-    public Optional<Schedule> getSchedule(final Long timeTableId) { return repository.findById(timeTableId); }
-    public void deleteSchedule(final Long timeTableId) { repository.deleteById(timeTableId); }
+    public Optional<Schedule> getSchedule(final Long scheduleId) { return repository.findById(scheduleId); }
+    public void deleteSchedule(final Long scheduleId) { repository.deleteById(scheduleId); }
     public Schedule saveSchedule(Schedule schedule) { return repository.save(schedule); }
 }

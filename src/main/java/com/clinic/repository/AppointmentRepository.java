@@ -1,6 +1,7 @@
 package com.clinic.repository;
 
 import com.clinic.domain.Appointment;
+import com.clinic.domain.Customer;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
@@ -12,4 +13,5 @@ public interface AppointmentRepository extends CrudRepository<Appointment,Long> 
     Optional<Appointment> findById(Long id);
     Appointment save(Appointment appointment);
     void deleteById(Long id);
+    List<Appointment> findAllByCustomer(Customer customer);
 }

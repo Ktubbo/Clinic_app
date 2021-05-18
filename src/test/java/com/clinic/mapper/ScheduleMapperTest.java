@@ -45,7 +45,7 @@ class ScheduleMapperTest {
                 .build();
 
         this.schedule = new Schedule(1L,start,end,employee,appointment);
-        this.scheduleDto = new ScheduleDto(1L,start,end,employee,appointment);
+        this.scheduleDto = new ScheduleDto(1L,"30-03-2021 15:30", "30-03-2021 16:30",employee,appointment);
     }
 
     @Test

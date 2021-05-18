@@ -12,8 +12,8 @@ import java.time.LocalDateTime;
 public class ScheduleDto {
 
     private Long id;
-    private LocalDateTime start;
-    private LocalDateTime end;
+    private String start;
+    private String end;
     private Employee employee;
     private Appointment appointment;
 }

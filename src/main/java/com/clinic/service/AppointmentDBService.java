@@ -1,8 +1,10 @@
 package com.clinic.service;
 
 import com.clinic.domain.Appointment;
+import com.clinic.domain.Customer;
 import com.clinic.domain.Schedule;
 import com.clinic.domain.Shift;
+import com.clinic.exceptions.BusyCustomerException;
 import com.clinic.exceptions.ScheduleNotFoundException;
 import com.clinic.exceptions.ShiftNotFoundException;
 import com.clinic.repository.AppointmentRepository;
@@ -30,29 +32,55 @@ public class AppointmentDBService {
     private final ScheduleRepository scheduleRepository;
 
     public List<Appointment> getAllAppointments() { return repository.findAll(); }
-    public Optional<Appointment> getAppointment(final Long appointmentId) { return repository.findById(appointmentId); }
-    public void deleteAppointment(final Long appointmentId) { repository.deleteById(appointmentId); }
+
+    public List<Appointment> getAllAppointmentsByCustomer(Customer customer) {
+        return repository.findAllByCustomer(customer); }
+
+    public Optional<Appointment> getAppointment(final Long appointmentId) { return
+            repository.findById(appointmentId); }
+
+    public void deleteAppointment(final Long appointmentId) {
+        scheduleRepository.deleteByAppointment(repository.findById(appointmentId).get());
+        repository.deleteById(appointmentId);
+    }
+
     public Appointment saveAppointment(Appointment appointment) throws Exception {
+
         LocalDateTime start = appointment.getStart();
         LocalDateTime end = appointment.getStart().plus(appointment.getTreatment().getDuration());
+        Appointment resultAppointment;
 
-        List<Shift> shiftsToCheck = shiftRepository
-                .findAllByEmployee(appointment.getEmployee())
+        boolean shiftsToCheck = !shiftRepository.findAllByEmployee(appointment.getEmployee()).isEmpty() &&
+                shiftRepository.findAllByEmployee(appointment.getEmployee()).stream()
+                .noneMatch(s -> ((start.isAfter(s.getStart()) || start.equals(s.getStart()))
+                        && (end.isBefore(s.getEnd()) || end.equals(s.getEnd()))));
+
+        boolean schedulesToCheck = false;
+        if(!scheduleRepository.findAllByEmployee(appointment.getEmployee()).isEmpty()) {
+            schedulesToCheck = scheduleRepository
+                    .findAllByEmployee(appointment.getEmployee())
+                    .stream()
+                    .anyMatch(sch -> (start.isAfter(sch.getStart()) && start.isBefore(sch.getEnd()))
+                            || (end.isAfter(sch.getStart()) && end.isBefore(sch.getEnd()))
+                            || (start.equals(sch.getStart()) && end.equals(sch.getEnd())));
+        }
+
+        boolean customersToCheck = repository.findAllByCustomer(appointment.getCustomer())
                 .stream()
-                .filter(s -> start.isAfter(s.getStart()))
-                .filter(s -> end.isBefore(s.getEnd()))
-                .collect(Collectors.toList());
+                .anyMatch(app -> (start.isAfter(app.getStart()) && start.isBefore(app.getStart()
+                        .plus(app.getTreatment().getDuration()))
+                        || (end.isAfter(app.getStart()) && end.isBefore(app.getStart()
+                        .plus(app.getTreatment().getDuration())))
+                        || (start.equals(app.getStart()) && end.equals(app.getStart()
+                        .plus(app.getTreatment().getDuration())))));
 
-        List<Schedule> schedulesToCheck = scheduleRepository
-                .findAllByEmployee(appointment.getEmployee())
-                .stream()
-                .filter(s -> !(start.isAfter(s.getStart()) && start.isBefore(s.getEnd()))
-                            || !(end.isAfter(s.getStart()) && end.isBefore(s.getEnd())))
-                .collect(Collectors.toList());
+        if (schedulesToCheck) { throw new ScheduleNotFoundException(); }
+        else if (shiftsToCheck) { throw new ShiftNotFoundException(); }
+        else if (customersToCheck) { throw new BusyCustomerException(); }
+        else {
+            scheduleRepository.save(new Schedule(start,end,appointment.getEmployee(),appointment));
+            resultAppointment = repository.save(appointment);
+        }
 
-        if (!schedulesToCheck.isEmpty()) {throw new ScheduleNotFoundException();}
-        else if (shiftsToCheck.isEmpty()) {throw new ShiftNotFoundException();}
-        else {repository.save(appointment);}
-
-        return appointment; }
+        return resultAppointment; }
 }

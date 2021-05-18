@@ -1,5 +1,7 @@
 package com.clinic.controller;
 
+import com.clinic.domain.Appointment;
+import com.clinic.domain.dto.AppointmentDto;
 import com.clinic.domain.dto.AppointmentDto;
 import com.clinic.exceptions.AppointmentNotFoundException;
 import com.clinic.mapper.AppointmentMapper;
@@ -43,5 +45,17 @@ public class AppointmentController {
             System.out.println(e);
         }
         return returnAppointment;
+    }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/appointments", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public AppointmentDto updateAppointment(@RequestBody AppointmentDto appointmentDto) {
+        Appointment appointment = mapper.mapToAppointment(appointmentDto);
+        Appointment returnAppointment = new Appointment();
+        try {
+            returnAppointment = dbService.saveAppointment(appointment);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return mapper.mapToAppointmentDto(returnAppointment);
     }
 }

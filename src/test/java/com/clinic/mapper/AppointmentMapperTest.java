@@ -49,7 +49,7 @@ class AppointmentMapperTest {
                 .start(start)
                 .build();
 
-        this.appointmentDto = new AppointmentDto(1L,start,treatment,customer,
+        this.appointmentDto = new AppointmentDto(1L,"20-02-2021 15:30",treatment,customer,
                 employee,"GROUPON",treatment.getPrice());
     }
 
@@ -76,7 +76,7 @@ class AppointmentMapperTest {
         //When
         AppointmentDto resultAppointmentDto = appointmentMapper.mapToAppointmentDto(appointment);
         //Then
-        assertEquals(LocalDateTime.of(2021,2,20,15,30),resultAppointmentDto.getStart());
+        assertEquals("20-02-2021 15:30",resultAppointmentDto.getStart());
         assertEquals("John",resultAppointmentDto.getCustomer().getFirstName());
         assertEquals("Brown",resultAppointmentDto.getEmployee().getLastName());
         assertEquals("Botox",resultAppointmentDto.getTreatment().getName());
@@ -91,10 +91,9 @@ class AppointmentMapperTest {
         //When
         List<Appointment> appointmentList = new ArrayList<>();
         appointmentList.add(appointment);
-        appointmentList.add(new Appointment());
         List<AppointmentDto> resultList = appointmentMapper.mapToAppointmentDtoList(appointmentList);
         //Then
-        assertEquals(2,resultList.size());
+        assertEquals(1,resultList.size());
     }
 
     @Test

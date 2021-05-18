@@ -28,7 +28,7 @@ public class Shift implements Cloneable{
     @Column(name = "end")
     private LocalDateTime end;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "employee_id")
     private Employee employee;
 

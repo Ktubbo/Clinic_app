@@ -27,13 +27,28 @@ class EmployeeDBServiceTest {
     private EmployeeDBService service;
     @Autowired
     private TreatmentDBService treatmentDBService;
-    
+
+    private Employee employee1;
+    private Employee employee2;
+    private Employee employee3;
+    private Treatment treatment1;
+    private Treatment treatment2;
+
+    void prepare() {
+        this.employee1 = new Employee("Mike","Brown");
+        this.employee2 = new Employee("John","Smith");
+        this.employee3 = new Employee("David","Gambro");
+        this.treatment1 = new Treatment("Botox",new BigDecimal(300),
+                Duration.of(30, ChronoUnit.MINUTES));
+        this.treatment2 = new Treatment("Cryolipolysis",new
+                BigDecimal(250),Duration.of(1,ChronoUnit.HOURS));
+    }
+
     @Test
     void saveAndGetAllEmployees() {
         //Given
+        prepare();
         int actualSizeOfEmployee = service.getAllEmployees().size();
-        Employee employee1 = new Employee();
-        Employee employee2 = new Employee();
         //When
         service.saveEmployee(employee1);
         service.saveEmployee(employee2);
@@ -42,29 +57,41 @@ class EmployeeDBServiceTest {
         assertEquals(actualSizeOfEmployee+2,employees.size());
     }
 
-    /*@Test
+    @Test
     void getEmployee() {
+        //Given
+        prepare();
+        //When
+        service.saveEmployee(employee1);
+        long id = employee1.getId();
+        //Then
+        Employee resultEmployee = service.getEmployee(id).get();
+        assertEquals("Mike", resultEmployee.getFirstName());
     }
 
     @Test
     void deleteEmployee() {
+        //Given
+        prepare();
+        int actualSizeOfEmployee = service.getAllEmployees().size();
+        //When
+        service.saveEmployee(employee1);
+        long id = employee1.getId();
+        //Then
+        service.deleteEmployee(id);
+        int resultSizeOfEmployee = service.getAllEmployees().size();
+        assertEquals(actualSizeOfEmployee, resultSizeOfEmployee);
     }
-
-    @Test
-    void testGetAllEmployees() {
-    }*/
 
     @Test
     void addTreatment() {
         //Given
-        Employee employee = new Employee();
-        Treatment treatment1 = new Treatment();
-        Treatment treatment2 = new Treatment();
+        prepare();
         //When
-        service.saveEmployee(employee);
+        service.saveEmployee(employee1);
         treatmentDBService.saveTreatment(treatment1);
         treatmentDBService.saveTreatment(treatment2);
-        Long employeeId = employee.getId();
+        Long employeeId = employee1.getId();
         Long treatment1Id = treatment1.getId();
         Long treatment2Id = treatment2.getId();
         try {
@@ -78,21 +105,42 @@ class EmployeeDBServiceTest {
         assertEquals(resultEmployee.getTreatments().size(),2);
     }
 
-    /*@Test
+    @Test
     void deleteTreatment() {
-    }*/
+        //Given
+        prepare();
+        //When
+        service.saveEmployee(employee1);
+        treatmentDBService.saveTreatment(treatment1);
+        treatmentDBService.saveTreatment(treatment2);
+        Long employeeId = employee1.getId();
+        Long treatment1Id = treatment1.getId();
+        Long treatment2Id = treatment2.getId();
+        try {
+            service.addTreatment(employeeId,treatment1Id);
+            service.addTreatment(employeeId,treatment2Id);
+        } catch (EmployeeNotFoundException e) {
+            fail();
+        }
+        //Then
+        try {
+            service.deleteTreatment(employeeId,treatment1Id);
+        } catch (EmployeeNotFoundException e) {
+            fail();
+        }
+        Employee resultEmployee = service.getEmployee(employeeId).get();
+        assertEquals(resultEmployee.getTreatments().size(),1);
+    }
 
     @Test
     void showTreatments() {
         //Given
-        Employee employee = new Employee();
-        Treatment treatment1 = new Treatment("Botox",new BigDecimal(300), Duration.of(30, ChronoUnit.MINUTES));
-        Treatment treatment2 = new Treatment("Cryolipolysis",new BigDecimal(250),Duration.of(1,ChronoUnit.HOURS));
+        prepare();
         //When
-        service.saveEmployee(employee);
+        service.saveEmployee(employee1);
         treatmentDBService.saveTreatment(treatment1);
         treatmentDBService.saveTreatment(treatment2);
-        Long employeeId = employee.getId();
+        Long employeeId = employee1.getId();
         Long treatment1Id = treatment1.getId();
         Long treatment2Id = treatment2.getId();
         try {
@@ -104,5 +152,20 @@ class EmployeeDBServiceTest {
         //Then
         List<Treatment> treatmentList = service.showTreatments(employeeId);
         assertEquals(treatmentList.size(),2);
+    }
+
+
+    @Test
+    void getAllEmployeesWithFilter() {
+        //Given
+        prepare();
+        String filterString = "Bro";
+        //Then
+        service.saveEmployee(employee1);
+        service.saveEmployee(employee2);
+        service.saveEmployee(employee3);
+        //When
+        List<Employee> resultList = service.getAllEmployees(filterString);
+        assertEquals(2,resultList.size());
     }
 }

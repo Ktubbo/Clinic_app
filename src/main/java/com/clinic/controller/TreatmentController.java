@@ -1,5 +1,6 @@
 package com.clinic.controller;
 
+import com.clinic.domain.Treatment;
 import com.clinic.domain.dto.TreatmentDto;
 import com.clinic.exceptions.TreatmentNotFoundException;
 import com.clinic.mapper.TreatmentMapper;
@@ -37,5 +38,12 @@ public class TreatmentController {
     @RequestMapping(method = RequestMethod.POST, value = "/treatments", consumes = MediaType.APPLICATION_JSON_VALUE)
     public TreatmentDto createTreatment(@RequestBody TreatmentDto treatmentDto) {
         return mapper.mapToTreatmentDto(dbService.saveTreatment(mapper.mapToTreatment(treatmentDto)));
+    }
+    
+    @RequestMapping(method = RequestMethod.PUT, value = "/treatments", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public TreatmentDto updateTreatment(@RequestBody TreatmentDto treatmentDto) {
+        Treatment treatment = mapper.mapToTreatment(treatmentDto);
+        Treatment savedTreatment = dbService.saveTreatment(treatment);
+        return mapper.mapToTreatmentDto(savedTreatment);
     }
 }

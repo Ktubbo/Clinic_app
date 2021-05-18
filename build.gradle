@@ -32,6 +32,7 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     runtimeOnly 'mysql:mysql-connector-java'
     testImplementation 'com.google.code.gson:gson'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind'
 }
 
 dependencyManagement {

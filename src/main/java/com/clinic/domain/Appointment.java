@@ -1,5 +1,7 @@
 package com.clinic.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,6 +25,7 @@ public final class Appointment {
     private Long id;
 
     @Column(name = "start")
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDateTime start;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -42,6 +45,10 @@ public final class Appointment {
 
     @Column(name = "pricing_strategy")
     private String pricingStrategy;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "schedule")
+    private Schedule schedule;
 
     public static class AppointmentBuilder {
         private Long id;
