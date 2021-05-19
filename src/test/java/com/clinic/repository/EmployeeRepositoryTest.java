@@ -24,6 +24,7 @@ class EmployeeRepositoryTest {
     @Test
     void saveAndFindAll() {
         //Given
+        int actualSize = repository.findAll().size();
         Employee employee1 = new Employee();
         Employee employee2 = new Employee();
         //When
@@ -31,7 +32,7 @@ class EmployeeRepositoryTest {
         repository.save(employee2);
         //Then
         List<Employee> employees = repository.findAll();
-        assertEquals(2,employees.size());
+        assertEquals(2+actualSize,employees.size());
     }
 
     @Test
@@ -49,6 +50,7 @@ class EmployeeRepositoryTest {
     @Test
     void deleteById() {
         //Given
+        int actualSize = repository.findAll().size();
         Employee employee1 = new Employee();
         //When
         repository.save(employee1);
@@ -56,6 +58,6 @@ class EmployeeRepositoryTest {
         repository.deleteById(id);
         //Then
         List<Employee> employees = repository.findAll();
-        assertEquals(0,employees.size());
+        assertEquals(actualSize,employees.size());
     }
 }

@@ -24,6 +24,7 @@ class ScheduleRepositoryTest {
     @Test
     void saveAndFindAll() {
         //Given
+        int actualSize = repository.findAll().size();
         Schedule schedule1 = new Schedule();
         Schedule schedule2 = new Schedule();
         //When
@@ -31,7 +32,7 @@ class ScheduleRepositoryTest {
         repository.save(schedule2);
         //Then
         List<Schedule> schedules = repository.findAll();
-        assertEquals(2,schedules.size());
+        assertEquals(2+actualSize,schedules.size());
     }
 
     @Test
@@ -49,6 +50,7 @@ class ScheduleRepositoryTest {
     @Test
     void deleteById() {
         //Given
+        int actualSize = repository.findAll().size();
         Schedule schedule1 = new Schedule();
         //When
         repository.save(schedule1);
@@ -56,7 +58,7 @@ class ScheduleRepositoryTest {
         repository.deleteById(id);
         //Then
         List<Schedule> schedules = repository.findAll();
-        assertEquals(0,schedules.size());
+        assertEquals(actualSize,schedules.size());
     }
 
 }

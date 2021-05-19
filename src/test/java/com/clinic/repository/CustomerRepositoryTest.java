@@ -24,6 +24,7 @@ class CustomerRepositoryTest {
     @Test
     void saveAndFindAll() {
         //Given
+        int actualSize = repository.findAll().size();
         Customer customer1 = new Customer();
         Customer customer2 = new Customer();
         //When
@@ -31,7 +32,7 @@ class CustomerRepositoryTest {
         repository.save(customer2);
         //Then
         List<Customer> customers = repository.findAll();
-        assertEquals(2,customers.size());
+        assertEquals(2+actualSize,customers.size());
     }
 
     @Test
@@ -49,6 +50,7 @@ class CustomerRepositoryTest {
     @Test
     void deleteById() {
         //Given
+        int actualSize = repository.findAll().size();
         Customer customer1 = new Customer();
         //When
         repository.save(customer1);
@@ -56,6 +58,6 @@ class CustomerRepositoryTest {
         repository.deleteById(id);
         //Then
         List<Customer> customers = repository.findAll();
-        assertEquals(0,customers.size());
+        assertEquals(actualSize,customers.size());
     }
 }

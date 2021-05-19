@@ -7,7 +7,6 @@ import com.clinic.views.appointments.SetAppointment;
 import com.clinic.views.customers.CustomersView;
 import com.clinic.views.employees.EmployeesView;
 import com.clinic.views.home.HomeView;
-import com.clinic.views.ratings.RatingsView;
 import com.clinic.views.shifts.ShiftsView;
 import com.clinic.views.schedules.SchedulesView;
 import com.clinic.views.treatments.TreatmentsView;
@@ -91,8 +90,7 @@ public class MainView extends AppLayout {
         return new Tab[]{createTab("Home", HomeView.class), createTab("Customers", CustomersView.class),
                 createTab("Employees", EmployeesView.class), createTab("Set Appointment", SetAppointment.class),
                 createTab("Appointments", AppointmentView.class), createTab("Treatments", TreatmentsView.class),
-                createTab("Shifts", ShiftsView.class), createTab("Schedules", SchedulesView.class),
-                createTab("Ratings", RatingsView.class)};
+                createTab("Shifts", ShiftsView.class), createTab("Schedules", SchedulesView.class)};
     }
 
     private static Tab createTab(String text, Class<? extends Component> navigationTarget) {

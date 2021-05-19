@@ -2,7 +2,10 @@ package com.clinic.controller;
 
 
 import com.clinic.domain.*;
+import com.clinic.domain.dto.AppointmentDto;
+import com.clinic.domain.dto.DurationDto;
 import com.clinic.domain.dto.ScheduleDto;
+import com.clinic.domain.dto.TreatmentDto;
 import com.google.gson.Gson;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -33,22 +36,16 @@ class ScheduleControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    private Appointment appointment;
+    private AppointmentDto appointment;
 
     void prepare() {
-        Customer customer = new Customer("John", "Smith", "72120112124");
-        Employee employee = new Employee("David", "Brown");
-        Treatment treatment = new Treatment("Botox", BigDecimal.valueOf(300), Duration.of(1, ChronoUnit.HOURS));
-        PricingStrategy groupon = PricingStrategy.GROUPON;
-        LocalDateTime start = LocalDateTime.of(2021, 2, 20, 15, 30);
 
-        this.appointment = new Appointment.AppointmentBuilder()
-                .customer(customer)
-                .employee(employee)
-                .treatment(treatment)
-                .pricingStrategy(groupon)
-                .start(start)
-                .build();
+        this.appointment = new AppointmentDto(1L,
+                "30-03-2021 15:30",
+                new TreatmentDto("Botox", BigDecimal.valueOf(300), new DurationDto(Duration.of(1, ChronoUnit.HOURS))),
+                new Customer("John","Smith","72120112124"),
+                new Employee("David","Brown"),"GROUPON", BigDecimal.valueOf(150));
+
     }
 
     @Test
@@ -138,7 +135,7 @@ class ScheduleControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .characterEncoding("UTF-8")
                         .content(jsonContent))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.employee.name", Matchers.is("Mike")));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.employee.firstName", Matchers.is("Mike")));
     }
 
     @Test

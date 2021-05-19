@@ -16,7 +16,7 @@ import java.util.Optional;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public final class Appointment {
+public final class Appointment implements Cloneable {
 
     @Id
     @NotNull
@@ -28,11 +28,11 @@ public final class Appointment {
     @JsonSerialize(using = ToStringSerializer.class)
     private LocalDateTime start;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "treatment_id")
     private Treatment treatment;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
@@ -105,5 +105,15 @@ public final class Appointment {
         this.employee = employee;
         this.price = price;
         this.pricingStrategy = pricingStrategy;
+    }
+
+    @Override
+    public Appointment clone() throws CloneNotSupportedException {
+        return (Appointment) super.clone();
+    }
+
+    @Override
+    public String toString() {
+        return start + " " + treatment + " " + employee + " " + customer;
     }
 }

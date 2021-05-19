@@ -40,7 +40,7 @@ public class ShiftDBService {
                     arrayList.add(shift.clone());
                 }
             } catch (CloneNotSupportedException ex) {
-                Logger.getLogger(ShiftDBService.class.getName()).log(Level.SEVERE, null, ex);
+                ex.printStackTrace();
             }
         }
         arrayList.sort((o1, o2) -> (int) (o2.getId() - o1.getId()));

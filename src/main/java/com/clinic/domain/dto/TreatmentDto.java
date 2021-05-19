@@ -30,11 +30,6 @@ public class TreatmentDto {
 
     @Override
     public String toString() {
-        return "TreatmentDto{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                ", duration=" + duration +
-                '}';
+        return name;
     }
 }

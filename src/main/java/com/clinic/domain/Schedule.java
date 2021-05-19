@@ -34,7 +34,7 @@ public class Schedule {
     @JoinColumn(name = "employee_id")
     private Employee employee;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "appointment_id")
     private Appointment appointment;
 

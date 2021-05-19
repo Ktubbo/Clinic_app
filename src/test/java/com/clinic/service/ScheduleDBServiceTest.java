@@ -31,6 +31,8 @@ class ScheduleDBServiceTest {
     private EmployeeDBService employeeDBService;
     @Autowired
     private CustomerDBService customerDBService;
+    @Autowired
+    private TreatmentDBService treatmentDBService;
 
     private Schedule schedule;
 
@@ -53,6 +55,7 @@ class ScheduleDBServiceTest {
 
         customerDBService.saveCustomer(customer);
         employeeDBService.saveEmployee(employee);
+        treatmentDBService.saveTreatment(treatment);
 
         try {
             appointmentDBService.saveAppointment(appointment);

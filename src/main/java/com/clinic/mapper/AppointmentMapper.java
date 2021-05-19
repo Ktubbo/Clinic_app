@@ -2,7 +2,12 @@ package com.clinic.mapper;
 
 import com.clinic.domain.Appointment;
 import com.clinic.domain.PricingStrategy;
+import com.clinic.domain.Treatment;
 import com.clinic.domain.dto.AppointmentDto;
+import com.clinic.domain.dto.DurationDto;
+import com.clinic.domain.dto.TreatmentDto;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -15,12 +20,15 @@ import java.util.stream.Collectors;
 @Service
 public class AppointmentMapper {
 
+    @Autowired
+    private TreatmentMapper treatmentMapper;
+
     public Appointment mapToAppointment(AppointmentDto appointmentDto) {
         return new Appointment.AppointmentBuilder()
                 .id(appointmentDto.getId())
                 .start(LocalDateTime.parse(appointmentDto.getStart(),DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")))
                 .pricingStrategy(PricingStrategy.valueOf(appointmentDto.getPricingStrategy()))
-                .treatment(appointmentDto.getTreatment())
+                .treatment(treatmentMapper.mapToTreatment(appointmentDto.getTreatment()))
                 .employee(appointmentDto.getEmployee())
                 .customer(appointmentDto.getCustomer())
                 .build();
@@ -29,7 +37,7 @@ public class AppointmentMapper {
     public AppointmentDto mapToAppointmentDto(Appointment appointment) {
         return new AppointmentDto(appointment.getId(),
                 appointment.getStart().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")),
-                appointment.getTreatment(),
+                treatmentMapper.mapToTreatmentDto(appointment.getTreatment()),
                 appointment.getCustomer(),
                 appointment.getEmployee(),
                 appointment.getPricingStrategy(),

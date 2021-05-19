@@ -35,7 +35,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 @Route(value = "schedules", layout = MainView.class)
-@PageTitle("Schedules")
+@PageTitle("Shifts")
 @CssImport("./views/schedules/schedules-view.css")
 public class ShiftsView extends Div {
 
@@ -129,7 +129,9 @@ public class ShiftsView extends Div {
                 shift = shiftDBService.getShift(shiftDto.getId()).get();
                 shift.setStart(LocalDateTime.of(date.getValue(),sHour));
                 shift.setEnd(LocalDateTime.of(date.getValue(),eHour));
+                shift.setEmployee(employeeMapper.mapToEmployee(employeeBinder.getBean()));
             }
+
             shiftDBService.saveShift(shift);
         } catch (NullPointerException e) {
             emptyEmployeeBean.open();

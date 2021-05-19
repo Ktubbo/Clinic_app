@@ -1,7 +1,10 @@
 package com.clinic.mapper;
 
 import com.clinic.domain.*;
+import com.clinic.domain.dto.AppointmentDto;
+import com.clinic.domain.dto.DurationDto;
 import com.clinic.domain.dto.ScheduleDto;
+import com.clinic.domain.dto.TreatmentDto;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,8 +47,14 @@ class ScheduleMapperTest {
                 .start(start)
                 .build();
 
+        AppointmentDto appointmentDto = new AppointmentDto(1L,
+                "20-02-2021 15:30",
+                new TreatmentDto("Botox", BigDecimal.valueOf(300), new DurationDto(Duration.of(1, ChronoUnit.HOURS))),
+                new Customer("John","Smith","72120112124"),
+                new Employee("David","Brown"),"GROUPON", BigDecimal.valueOf(150));
+
         this.schedule = new Schedule(1L,start,end,employee,appointment);
-        this.scheduleDto = new ScheduleDto(1L,"30-03-2021 15:30", "30-03-2021 16:30",employee,appointment);
+        this.scheduleDto = new ScheduleDto(1L,"20-02-2021 15:30", "20-02-2021 16:30",employee,appointmentDto);
     }
 
     @Test
@@ -70,8 +79,8 @@ class ScheduleMapperTest {
         ScheduleDto resultSchedule = mapper.mapToScheduleDto(schedule);
         //Then
         assertEquals(1,resultSchedule.getId());
-        assertEquals(LocalDateTime.of(2021,2,20,15,30),resultSchedule.getStart());
-        assertEquals(LocalDateTime.of(2021,2,20,16,30),resultSchedule.getEnd());
+        assertEquals("20-02-2021 15:30",resultSchedule.getStart());
+        assertEquals("20-02-2021 16:30",resultSchedule.getEnd());
         assertEquals("David",resultSchedule.getEmployee().getFirstName());
         assertEquals("Smith",resultSchedule.getAppointment().getCustomer().getLastName());
     }

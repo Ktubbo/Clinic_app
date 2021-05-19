@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -78,9 +80,27 @@ public class AppointmentDBService {
         else if (shiftsToCheck) { throw new ShiftNotFoundException(); }
         else if (customersToCheck) { throw new BusyCustomerException(); }
         else {
-            scheduleRepository.save(new Schedule(start,end,appointment.getEmployee(),appointment));
             resultAppointment = repository.save(appointment);
+            scheduleRepository.save(new Schedule(start,end,appointment.getEmployee(),appointment));
         }
 
         return resultAppointment; }
+
+    public synchronized List<Appointment> getAllAppointments(String stringFilter) {
+        ArrayList<Appointment> arrayList = new ArrayList<>();
+        List<Appointment> contacts = repository.findAll();
+        for (Appointment contact : contacts) {
+            try {
+                boolean passesFilter = (stringFilter == null || stringFilter.isEmpty())
+                        || contact.toString().toLowerCase().contains(stringFilter.toLowerCase());
+                if (passesFilter) {
+                    arrayList.add(contact.clone());
+                }
+            } catch (CloneNotSupportedException ex) {
+                ex.printStackTrace();
+            }
+        }
+        Collections.sort(arrayList, (o1, o2) -> (int) (o2.getId() - o1.getId()));
+        return arrayList;
+    }
 }

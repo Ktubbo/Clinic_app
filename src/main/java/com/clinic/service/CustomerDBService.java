@@ -34,7 +34,7 @@ public class CustomerDBService {
                     arrayList.add(contact.clone());
                 }
             } catch (CloneNotSupportedException ex) {
-                //Logger.getLogger(CustomerDBService.class.getName()).log(Level.SEVERE, null, ex);
+                ex.printStackTrace();
             }
         }
         Collections.sort(arrayList, (o1, o2) -> (int) (o2.getId() - o1.getId()));

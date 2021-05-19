@@ -16,6 +16,7 @@ import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -97,8 +98,11 @@ public class EmployeesView extends Div {
         HorizontalLayout treatmentButtons = new HorizontalLayout(addTreatment,deleteTreatment);
         VerticalLayout buttons = new VerticalLayout(employeeButtons,treatmentButtons);
         VerticalLayout form = new VerticalLayout(firstName, lastName, buttons);
-        HorizontalLayout mainContent = new HorizontalLayout(grid,treatmentGrid,form);
-        add(filterText,mainContent,employeeTreatments);
+        VerticalLayout employeeGrid = new VerticalLayout(new Label("Pick Employee:"),grid);
+        VerticalLayout tGrid = new VerticalLayout(new Label("Pick treatment:"));
+        HorizontalLayout mainContent = new HorizontalLayout(employeeGrid,tGrid,form);
+        VerticalLayout secondRow = new VerticalLayout(new Label("Treatments assigned to Employee:"),employeeTreatments);
+        add(filterText,mainContent,secondRow);
 
         save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         addTreatment.addThemeVariants(ButtonVariant.LUMO_PRIMARY);

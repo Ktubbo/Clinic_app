@@ -2,6 +2,8 @@ package com.clinic.mapper;
 
 import com.clinic.domain.*;
 import com.clinic.domain.dto.AppointmentDto;
+import com.clinic.domain.dto.DurationDto;
+import com.clinic.domain.dto.TreatmentDto;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,7 @@ class AppointmentMapperTest {
 
     private Customer customer;
     private Employee employee;
+    private TreatmentDto treatmentDto;
     private Treatment treatment;
     private PricingStrategy groupon;
     private LocalDateTime start;
@@ -38,6 +41,7 @@ class AppointmentMapperTest {
         this.customer = new Customer("John","Smith","72120112124");
         this.employee = new Employee("David","Brown");
         this.treatment = new Treatment("Botox", BigDecimal.valueOf(300), Duration.of(1, ChronoUnit.HOURS));
+        this.treatmentDto = new TreatmentDto("Botox", BigDecimal.valueOf(300), new DurationDto(Duration.of(1, ChronoUnit.HOURS)));
         this.groupon = PricingStrategy.GROUPON;
         this.start = LocalDateTime.of(2021,2,20,15,30);
 
@@ -49,7 +53,7 @@ class AppointmentMapperTest {
                 .start(start)
                 .build();
 
-        this.appointmentDto = new AppointmentDto(1L,"20-02-2021 15:30",treatment,customer,
+        this.appointmentDto = new AppointmentDto(1L,"20-02-2021 15:30",treatmentDto,customer,
                 employee,"GROUPON",treatment.getPrice());
     }
 

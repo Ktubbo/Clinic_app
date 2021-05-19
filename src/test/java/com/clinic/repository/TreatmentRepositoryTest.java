@@ -24,6 +24,7 @@ class TreatmentRepositoryTest {
     @Test
     void saveAndFindAll() {
         //Given
+        int actualSize = repository.findAll().size();
         Treatment treatment1 = new Treatment();
         Treatment treatment2 = new Treatment();
         //When
@@ -31,7 +32,7 @@ class TreatmentRepositoryTest {
         repository.save(treatment2);
         //Then
         List<Treatment> treatments = repository.findAll();
-        assertEquals(2,treatments.size());
+        assertEquals(2+actualSize,treatments.size());
     }
 
     @Test
@@ -49,6 +50,7 @@ class TreatmentRepositoryTest {
     @Test
     void deleteById() {
         //Given
+        int actualSize = repository.findAll().size();
         Treatment treatment1 = new Treatment();
         //When
         repository.save(treatment1);
@@ -56,6 +58,6 @@ class TreatmentRepositoryTest {
         repository.deleteById(id);
         //Then
         List<Treatment> treatments = repository.findAll();
-        assertEquals(0,treatments.size());
+        assertEquals(actualSize,treatments.size());
     }
 }

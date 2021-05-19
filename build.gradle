@@ -33,6 +33,8 @@ dependencies {
     runtimeOnly 'mysql:mysql-connector-java'
     testImplementation 'com.google.code.gson:gson'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind'
+    implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '4.9.1'
+    implementation group: 'com.vaadin.external.google', name: 'android-json', version: '0.0.20131108.vaadin1'
 }
 
 dependencyManagement {

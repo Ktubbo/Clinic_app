@@ -27,6 +27,7 @@ class ShiftRepositoryTest {
     @Test
     void saveAndFindAll() {
         //Given
+        int actualSize = repository.findAll().size();
         Shift shift1 = new Shift();
         Shift shift2 = new Shift();
         //When
@@ -34,7 +35,7 @@ class ShiftRepositoryTest {
         repository.save(shift2);
         //Then
         List<Shift> shifts = repository.findAll();
-        assertEquals(2,shifts.size());
+        assertEquals(2+actualSize,shifts.size());
     }
 
     @Test
@@ -52,6 +53,7 @@ class ShiftRepositoryTest {
     @Test
     void deleteById() {
         //Given
+        int actualSize = repository.findAll().size();
         Shift shift1 = new Shift();
         //When
         repository.save(shift1);
@@ -59,13 +61,14 @@ class ShiftRepositoryTest {
         repository.deleteById(id);
         //Then
         List<Shift> shifts = repository.findAll();
-        assertEquals(0,shifts.size());
+        assertEquals(actualSize,shifts.size());
     }
 
     @Test
     void findAllByEmployee() {
         //Given
-        Employee employee = new Employee("David","Brown");
+        int actualSize = repository.findAll().size();
+        Employee employee = new Employee("Test_emp","Test_emp");
         employeeRepository.save(employee);
         LocalDateTime start = LocalDateTime.of(2021,2,19,15,30);
         LocalDateTime end = LocalDateTime.of(2021,2,19,16,30);

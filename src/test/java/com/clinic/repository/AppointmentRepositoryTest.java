@@ -24,14 +24,15 @@ class AppointmentRepositoryTest {
     @Test
     void saveAndFindAll() {
     //Given
-    Appointment appointment1 = new Appointment();
-    Appointment appointment2 = new Appointment();
-    //When
-    repository.save(appointment1);
-    repository.save(appointment2);
-    //Then
-    List<Appointment> appointments = repository.findAll();
-    assertEquals(2,appointments.size());
+        int actualSize = repository.findAll().size();
+        Appointment appointment1 = new Appointment();
+        Appointment appointment2 = new Appointment();
+        //When
+        repository.save(appointment1);
+        repository.save(appointment2);
+        //Then
+        List<Appointment> appointments = repository.findAll();
+        assertEquals(2+actualSize,appointments.size());
     }
 
     @Test
@@ -49,6 +50,7 @@ class AppointmentRepositoryTest {
     @Test
     void deleteById() {
         //Given
+        int actualSize = repository.findAll().size();
         Appointment appointment1 = new Appointment();
         //When
         repository.save(appointment1);
@@ -56,6 +58,6 @@ class AppointmentRepositoryTest {
         repository.deleteById(id);
         //Then
         List<Appointment> appointments = repository.findAll();
-        assertEquals(0,appointments.size());
+        assertEquals(actualSize,appointments.size());
     }
 }

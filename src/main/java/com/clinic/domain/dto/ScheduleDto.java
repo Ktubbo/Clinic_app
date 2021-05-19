@@ -15,5 +15,5 @@ public class ScheduleDto {
     private String start;
     private String end;
     private Employee employee;
-    private Appointment appointment;
+    private AppointmentDto appointment;
 }

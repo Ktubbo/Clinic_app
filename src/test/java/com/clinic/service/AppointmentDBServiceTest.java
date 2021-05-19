@@ -34,6 +34,8 @@ class AppointmentDBServiceTest {
     private ShiftDBService shiftDBService;
     @Autowired
     private CustomerDBService customerDBService;
+    @Autowired
+    private TreatmentDBService treatmentDBService;
 
     private Customer customer1;
     private Customer customer2;
@@ -49,6 +51,8 @@ class AppointmentDBServiceTest {
         Shift shift = new Shift(LocalDateTime.of(2021,2,20,8,0),
                 LocalDateTime.of(2021,2,20,16,0),
                 employee1);
+        this.treatment = new Treatment("Botox", BigDecimal.valueOf(300),
+                Duration.of(1, ChronoUnit.HOURS));
 
         List<Shift> shifts = new ArrayList<>();
         shifts.add(shift);
@@ -57,6 +61,7 @@ class AppointmentDBServiceTest {
         employeeDBService.saveEmployee(employee1);
         employeeDBService.saveEmployee(employee2);
         shiftDBService.saveShift(shift);
+        treatmentDBService.saveTreatment(treatment);
 
         this.customer1 = new Customer("Test_emp1","Test_LN1",
                 "12345678910","test@mail.com");
@@ -65,8 +70,7 @@ class AppointmentDBServiceTest {
         customerDBService.saveCustomer(customer1);
         customerDBService.saveCustomer(customer2);
 
-        this.treatment = new Treatment("Botox", BigDecimal.valueOf(300),
-                Duration.of(1, ChronoUnit.HOURS));
+
 
         this.normal = PricingStrategy.NORMAL;
     }

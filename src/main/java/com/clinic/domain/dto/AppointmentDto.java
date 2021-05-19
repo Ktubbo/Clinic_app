@@ -19,9 +19,14 @@ public class AppointmentDto {
 
     private Long id;
     private String start;
-    private Treatment treatment;
+    private TreatmentDto treatment;
     private Customer customer;
     private Employee employee;
     private String pricingStrategy;
     private BigDecimal price;
+
+    @Override
+    public String toString() {
+        return treatment + "\n" + customer + "\n" + price;
+    }
 }

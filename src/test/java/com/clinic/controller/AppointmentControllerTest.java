@@ -5,6 +5,8 @@ import com.clinic.domain.Customer;
 import com.clinic.domain.Employee;
 import com.clinic.domain.Treatment;
 import com.clinic.domain.dto.AppointmentDto;
+import com.clinic.domain.dto.DurationDto;
+import com.clinic.domain.dto.TreatmentDto;
 import com.google.gson.Gson;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -38,16 +40,16 @@ class AppointmentControllerTest {
     private MockMvc mockMvc;
 
     @Test
-    void getAppointments() throws Exception{
+    void getAppointments() throws Exception {
         //Given
         AppointmentDto appointment1 = new AppointmentDto(1L,
                 "30-03-2021 15:30",
-                new Treatment("Botox", BigDecimal.valueOf(300), Duration.of(1, ChronoUnit.HOURS)),
+                new TreatmentDto("Botox", BigDecimal.valueOf(300), new DurationDto(Duration.of(1, ChronoUnit.HOURS))),
                 new Customer("John","Smith","72120112124"),
                 new Employee("David","Brown"),"GROUPON", BigDecimal.valueOf(150));
         AppointmentDto appointment2 = new AppointmentDto(2L,
                 "30-03-2021 16:30",
-                new Treatment("Botox", BigDecimal.valueOf(300), Duration.of(1, ChronoUnit.HOURS)),
+                new TreatmentDto("Botox", BigDecimal.valueOf(300), new DurationDto(Duration.of(1, ChronoUnit.HOURS))),
                 new Customer("John","Smith","72120112124"),
                 new Employee("David","Brown"),"GROUPON", BigDecimal.valueOf(150));
 
@@ -67,12 +69,12 @@ class AppointmentControllerTest {
         //Given
         AppointmentDto appointment = new AppointmentDto(1L,
                 "30-03-2021 15:30",
-                new Treatment("Botox", BigDecimal.valueOf(300), Duration.of(1, ChronoUnit.HOURS)),
+                new TreatmentDto("Botox", BigDecimal.valueOf(300), new DurationDto(Duration.of(1, ChronoUnit.HOURS))),
                 new Customer("John","Smith","72120112124"),
                 new Employee("David","Brown"),"GROUPON", BigDecimal.valueOf(150));
         AppointmentDto createdAppointment = new AppointmentDto(2L,
                 "30-03-2021 16:30",
-                new Treatment("Botox", BigDecimal.valueOf(300), Duration.of(1, ChronoUnit.HOURS)),
+                new TreatmentDto("Botox", BigDecimal.valueOf(300), new DurationDto(Duration.of(1, ChronoUnit.HOURS))),
                 new Customer("John","Smith","72120112124"),
                 new Employee("David","Brown"),"GROUPON", BigDecimal.valueOf(150));
 
@@ -86,7 +88,7 @@ class AppointmentControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .characterEncoding("UTF-8")
                         .content(jsonContent))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.employee.firstName",Matchers.is("Mike")));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.employee.firstName",Matchers.is("David")));
     }
 
     @Test
@@ -105,15 +107,14 @@ class AppointmentControllerTest {
         //Given
         AppointmentDto appointment = new AppointmentDto(1L,
                 "30-03-2021 15:30",
-                new Treatment("Botox", BigDecimal.valueOf(300), Duration.of(1, ChronoUnit.HOURS)),
+                new TreatmentDto("Botox", BigDecimal.valueOf(300), new DurationDto(Duration.of(1, ChronoUnit.HOURS))),
                 new Customer("John","Smith","72120112124"),
-                new Employee("David","Brown"), "GROUPON", BigDecimal.valueOf(150));
-
+                new Employee("David","Brown"),"GROUPON", BigDecimal.valueOf(150));
         AppointmentDto updatedAppointment = new AppointmentDto(2L,
                 "30-03-2021 16:30",
-                new Treatment("Botox", BigDecimal.valueOf(300), Duration.of(1, ChronoUnit.HOURS)),
-                new Customer("Mike","Smith","72120112124"),
-                new Employee("David","Brown"), "GROUPON", BigDecimal.valueOf(150));
+                new TreatmentDto("Botox", BigDecimal.valueOf(300), new DurationDto(Duration.of(1, ChronoUnit.HOURS))),
+                new Customer("John","Smith","72120112124"),
+                new Employee("David","Brown"),"GROUPON", BigDecimal.valueOf(150));
 
         when(controller.updateAppointment(any(AppointmentDto.class))).thenReturn(updatedAppointment);
         Gson gson = new Gson();
@@ -125,17 +126,17 @@ class AppointmentControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .characterEncoding("UTF-8")
                         .content(jsonContent))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.employee.firstName",Matchers.is("Mike")));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.employee.firstName",Matchers.is("David")));
     }
 
     @Test
     void getAppointment() throws Exception {
         //Given
         AppointmentDto appointment = new AppointmentDto(1L,
-                "30-03-2021 16:30",
-                new Treatment("Botox", BigDecimal.valueOf(300), Duration.of(1, ChronoUnit.HOURS)),
+                "30-03-2021 15:30",
+                new TreatmentDto("Botox", BigDecimal.valueOf(300), new DurationDto(Duration.of(1, ChronoUnit.HOURS))),
                 new Customer("John","Smith","72120112124"),
-                new Employee("David","Brown"), "GROUPON", BigDecimal.valueOf(150));
+                new Employee("David","Brown"),"GROUPON", BigDecimal.valueOf(150));
         when(controller.getAppointment(any(Long.class))).thenReturn(appointment);
         //When & Then
         mockMvc
